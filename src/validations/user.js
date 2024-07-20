@@ -20,14 +20,24 @@ const pagination = {
 };
 
 const getAllUsers = {
-  query: {
+  query: Joi.object().keys({
     ...pagination,
     firstname: Joi.string(),
     lastname: Joi.string(),
     email: Joi.string(),
-  },
+  }),
+};
+
+const createUser = {
+  body: Joi.object().keys({
+    firstname: Joi.string().required().trim(),
+    lastname: Joi.string().required().trim(),
+    email: Joi.string().email().required().lowercase(),
+    password: Joi.string().required().min(6),
+  }),
 };
 
 module.exports = {
   getAllUsers,
+  createUser,
 };

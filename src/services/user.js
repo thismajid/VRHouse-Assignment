@@ -22,6 +22,15 @@ const getAllUsers = async ({
   return UserRepository.findAll(filter, pagination);
 };
 
+const createUser = async (userData) => {
+  const existingUser = await UserRepository.findByEmail(userData.email);
+  if (existingUser) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "User already exists");
+  }
+  return UserRepository.create(userData);
+};
+
 module.exports = {
   getAllUsers,
+  createUser,
 };

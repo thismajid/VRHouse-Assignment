@@ -8,6 +8,12 @@ const getAllUsers = catchAsync(async (req, res) => {
   res.sendResponse(httpStatus.OK, { ...results });
 });
 
+const createUser = catchAsync(async (req, res) => {
+  const user = await UserService.createUser(req.body);
+  res.sendResponse(httpStatus.CREATED, { ...user.toJSON() });
+});
+
 module.exports = {
   getAllUsers,
+  createUser,
 };
