@@ -13,7 +13,13 @@ const createUser = catchAsync(async (req, res) => {
   res.sendResponse(httpStatus.CREATED, { ...user.toJSON() });
 });
 
+const getEachUser = catchAsync(async (req, res) => {
+  const user = await UserService.getEachUser(req.params.id);
+  res.sendResponse(httpStatus.OK, { ...user.toJSON() });
+});
+
 module.exports = {
   getAllUsers,
   createUser,
+  getEachUser,
 };

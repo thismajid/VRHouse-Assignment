@@ -30,7 +30,16 @@ const createUser = async (userData) => {
   return UserRepository.create(userData);
 };
 
+const getEachUser = async (id) => {
+  const user = await UserRepository.findById(id);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, `User with id: ${id} not found`);
+  }
+  return user;
+};
+
 module.exports = {
   getAllUsers,
   createUser,
+  getEachUser,
 };

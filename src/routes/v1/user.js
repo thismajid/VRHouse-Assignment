@@ -13,6 +13,10 @@ router
   .get(validate(UserValidation.getAllUsers), UserController.getAllUsers)
   .post(validate(UserValidation.createUser), UserController.createUser);
 
+router
+  .route("/:id")
+  .get(validate(UserValidation.getEachUser), UserController.getEachUser);
+
 module.exports = router;
 
 /**
@@ -101,6 +105,26 @@ module.exports = router;
  *               lastname: lastname
  *               email: unique_email@email.com
  *               password: strong123password
+ *     responses:
+ *       "200":
+ *         description: OK
+ */
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     summary: Get each user by id
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User id
  *     responses:
  *       "200":
  *         description: OK

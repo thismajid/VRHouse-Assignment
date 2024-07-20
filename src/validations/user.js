@@ -37,7 +37,14 @@ const createUser = {
   }),
 };
 
+const getEachUser = {
+  params: Joi.object().keys({
+    id: objectId.objectId().required(),
+  }),
+};
+
 module.exports = {
   getAllUsers,
   createUser,
+  getEachUser,
 };
