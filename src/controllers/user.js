@@ -23,9 +23,15 @@ const updateEachUser = catchAsync(async (req, res) => {
   res.sendResponse(httpStatus.OK, { ...user.toJSON() });
 });
 
+const deleteEachUser = catchAsync(async (req, res) => {
+  await UserService.deleteUser(req.params.id);
+  res.sendResponse(httpStatus.OK, {});
+});
+
 module.exports = {
   getAllUsers,
   createUser,
   getEachUser,
   updateEachUser,
+  deleteEachUser,
 };

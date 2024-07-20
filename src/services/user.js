@@ -49,7 +49,15 @@ const updateUser = async (id, userData) => {
   if (existingUserWithEmail && existingUserWithEmail.id.toString() !== id) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
   }
-  return UserRepository.update(id, userData);
+  return UserRepository.updateById(id, userData);
+};
+
+const deleteUser = async (id) => {
+  const user = await UserRepository.findById(id);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, `User with id: ${id} not found`);
+  }
+  UserRepository.deleteById(id);
 };
 
 module.exports = {
@@ -57,4 +65,5 @@ module.exports = {
   createUser,
   getEachUser,
   updateUser,
+  deleteUser,
 };
