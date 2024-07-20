@@ -69,6 +69,12 @@ module.exports = router;
  *           minimum: 1
  *           default: 1
  *         description: Page number
+ *       - in: query
+ *         name: sorting
+ *         schema:
+ *           type: string
+ *           default: 'desc'
+ *         description: Sort order
  *     responses:
  *       "200":
  *         description: OK

@@ -19,9 +19,14 @@ const pagination = {
   limit: Joi.number().integer().min(1).max(100).default(10),
 };
 
+const sort = {
+  sorting: Joi.string().valid("desc", "asc").default("desc"),
+};
+
 const getAllUsers = {
   query: Joi.object().keys({
     ...pagination,
+    ...sort,
     firstname: Joi.string(),
     lastname: Joi.string(),
     email: Joi.string(),

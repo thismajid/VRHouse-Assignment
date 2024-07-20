@@ -12,13 +12,15 @@ const getAllUsers = async ({
   email,
   page = 1,
   limit = 10,
+  sorting = "desc",
 }) => {
   const filter = {
     ...(firstname && { firstname: { $regex: new RegExp(firstname, "i") } }),
     ...(lastname && { lastname: { $regex: new RegExp(lastname, "i") } }),
     ...(email && { email: { $regex: new RegExp(email, "i") } }),
   };
-  const pagination = { page, limit };
+  const sort = sorting === "desc" ? { _id: -1 } : { _id: 1 };
+  const pagination = { page, limit, sort };
   return UserRepository.findAll(filter, pagination);
 };
 
