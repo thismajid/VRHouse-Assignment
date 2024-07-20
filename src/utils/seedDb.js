@@ -5,7 +5,7 @@ module.exports = async () => {
     const adminExist = await UserRepository.findAdmin();
 
     if (!adminExist) {
-      await userRepository.create({
+      await UserRepository.create({
         firstname: "admin",
         lastname: "admin",
         password: "superadminpassword99",
