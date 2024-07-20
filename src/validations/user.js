@@ -43,8 +43,21 @@ const getEachUser = {
   }),
 };
 
+const updateEachUser = {
+  params: Joi.object({
+    id: objectId.objectId().required(),
+  }),
+  body: Joi.object({
+    firstname: Joi.string().trim(),
+    lastname: Joi.string().trim(),
+    email: Joi.string().email().lowercase(),
+    password: Joi.string().min(6),
+  }),
+};
+
 module.exports = {
   getAllUsers,
   createUser,
   getEachUser,
+  updateEachUser,
 };

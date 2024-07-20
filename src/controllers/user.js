@@ -18,8 +18,14 @@ const getEachUser = catchAsync(async (req, res) => {
   res.sendResponse(httpStatus.OK, { ...user.toJSON() });
 });
 
+const updateEachUser = catchAsync(async (req, res) => {
+  const user = await UserService.updateUser(req.params.id, req.body);
+  res.sendResponse(httpStatus.OK, { ...user.toJSON() });
+});
+
 module.exports = {
   getAllUsers,
   createUser,
   getEachUser,
+  updateEachUser,
 };

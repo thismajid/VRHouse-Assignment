@@ -15,7 +15,8 @@ router
 
 router
   .route("/:id")
-  .get(validate(UserValidation.getEachUser), UserController.getEachUser);
+  .get(validate(UserValidation.getEachUser), UserController.getEachUser)
+  .put(validate(UserValidation.updateEachUser), UserController.updateEachUser);
 
 module.exports = router;
 
@@ -125,6 +126,51 @@ module.exports = router;
  *         schema:
  *           type: string
  *         description: User id
+ *     responses:
+ *       "200":
+ *         description: OK
+ */
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   put:
+ *     summary: Update exist user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - firstname
+ *               - lastname
+ *               - email
+ *               - password
+ *             properties:
+ *               firstname:
+ *                 type: string
+ *               lastname:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example:
+ *               firstname: firstname
+ *               lastname: lastname
+ *               email: unique_email@email.com
+ *               password: strong123password
  *     responses:
  *       "200":
  *         description: OK

@@ -38,8 +38,23 @@ const getEachUser = async (id) => {
   return user;
 };
 
+const updateUser = async (id, userData) => {
+  const existingUser = await UserRepository.findById(id);
+  if (!existingUser) {
+    throw new ApiError(httpStatus.NOT_FOUND, `User with id: ${id} not found`);
+  }
+  const existingUserWithEmail = await UserRepository.findByEmail(
+    userData.email
+  );
+  if (existingUserWithEmail && existingUserWithEmail.id.toString() !== id) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Email already taken");
+  }
+  return UserRepository.update(id, userData);
+};
+
 module.exports = {
   getAllUsers,
   createUser,
   getEachUser,
+  updateUser,
 };
