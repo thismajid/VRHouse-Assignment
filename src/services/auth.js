@@ -10,7 +10,7 @@ const { mainConfigs } = require("../configs");
 const { UserRepository } = require("../repositories");
 
 const loginUserWithEmailAndPassword = async ({ email, password }) => {
-  const user = await UserRepository.findUserByEmail(email);
+  const user = await UserRepository.findByEmail(email);
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email or password");
   }

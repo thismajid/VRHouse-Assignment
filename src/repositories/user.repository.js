@@ -1,42 +1,47 @@
 const { UserModel } = require("../models");
 
-const createUser = async (userData) => {
+const create = async (userData) => {
   const user = new UserModel(userData);
   return user.save();
 };
 
-const findUserById = async (id) => {
-  return UserModel.findById(id);
+const findAll = async (query = {}, pagination = {}) => {
+  return await UserModel.paginate(query, pagination);
 };
 
-const findUserByEmail = async (email) => {
-  return UserModel.findOne({ email });
+const findById = async (id) => {
+  return await UserModel.findById(id);
 };
 
-const updateUserById = async (id, updateData) => {
-  return UserModel.findByIdAndUpdate(id, updateData, {
+const findByEmail = async (email) => {
+  return await UserModel.findOne({ email });
+};
+
+const updateById = async (id, updateData) => {
+  return await UserModel.findByIdAndUpdate(id, updateData, {
     new: true,
   });
 };
 
-const deleteUserById = async (id) => {
-  return UserModel.findByIdAndDelete(id);
+const deleteById = async (id) => {
+  return await UserModel.findByIdAndDelete(id);
 };
 
 const comparePassword = async (user, password) => {
-  return user.isPasswordMatch(password);
+  return await user.isPasswordMatch(password);
 };
 
 const findAdmin = async (role = "admin") => {
-  return UserModel.findOne({ role });
+  return await UserModel.findOne({ role });
 };
 
 module.exports = {
-  createUser,
-  findUserById,
-  findUserByEmail,
-  updateUserById,
-  deleteUserById,
+  create,
+  findAll,
+  findById,
+  findByEmail,
+  updateById,
+  deleteById,
   comparePassword,
   findAdmin,
 };
