@@ -3,12 +3,13 @@ const helmet = require("helmet");
 const expressMongoSanitize = require("express-mongo-sanitize");
 const compression = require("compression");
 const cors = require("cors");
-const xssShield = require("xss-shield");
+const { xss } = require("express-xss-sanitizer");
 const httpStatus = require("http-status");
 
 const { mainConfigs, morgan } = require("./configs");
 const { errorConverter, errorHandler } = require("./middlewares");
 const { ApiError, response } = require("./utils");
+const routes = require("./routes/v1");
 
 const app = express();
 
@@ -35,10 +36,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(expressMongoSanitize());
 
 // prevent xss
-app.use(xssShield());
+app.use(xss());
 
 // gzip compression
 app.use(compression());
+
+// v1 api routes
+app.use("/api/v1", routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

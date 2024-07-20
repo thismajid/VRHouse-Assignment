@@ -24,7 +24,11 @@ const deleteUserById = async (id) => {
 };
 
 const comparePassword = async (user, password) => {
-  return UserModel.isPasswordMatch(password);
+  return user.isPasswordMatch(password);
+};
+
+const findAdmin = async (role = "admin") => {
+  return UserModel.findOne({ role });
 };
 
 module.exports = {
@@ -34,4 +38,5 @@ module.exports = {
   updateUserById,
   deleteUserById,
   comparePassword,
+  findAdmin,
 };
