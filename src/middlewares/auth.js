@@ -2,9 +2,6 @@ const jwt = require("jsonwebtoken");
 const httpStatus = require("http-status");
 
 const { mainConfigs } = require("../configs");
-const { UserRepository } = require("../repositories");
-
-const userRepository = new UserRepository();
 
 module.exports = () => async (req, res, next) => {
   if (!req.headers.authorization) {

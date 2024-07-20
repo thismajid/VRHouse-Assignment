@@ -1,6 +1,6 @@
 const paginate = (schema) => {
   schema.statics.paginate = async function (query, options) {
-    const { page = 1, limit = 10, populate } = options;
+    const { page = 1, limit = 10, populate, sort } = options;
     const skip = (page - 1) * limit;
 
     const countPromise = this.countDocuments(query).exec();
@@ -12,6 +12,11 @@ const paginate = (schema) => {
         docsQuery = docsQuery.populate(field);
       });
     }
+
+    if (sort) {
+      docsQuery = docsQuery.sort(sort); // Apply sorting to the query
+    }
+
     const docsPromise = docsQuery.exec();
 
     const [totalDocs, docs] = await Promise.all([countPromise, docsPromise]);
